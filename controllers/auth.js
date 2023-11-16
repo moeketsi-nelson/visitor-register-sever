@@ -6,24 +6,23 @@ exports.login = async (req, res, next) => {
   const { branch, password } = req.body;
 
   if (!branch || !password) {
-    res.redirect("/login");
-    // return next(new ErrorResponse("please provide branch and password", 400));
+    res.redirect("/");
   }
 
   try {
     const user = await User.findOne({ branch }).select("+password");
 
     if (!user) {
-      res.redirect("/login");
-      // return next(new ErrorResponse("invalid credentials", 404));
+      res.redirect("/");
     }
 
     const isMatch = await user.matchPasswords(password);
 
     if (!isMatch) {
-      res.redirect("/login");
+      res.redirect("/");
     }
 
+    req.session.isAuth = true;
     res.redirect("/register-visitor");
   } catch (error) {
     return next(new ErrorResponse(error, 500));

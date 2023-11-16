@@ -40,6 +40,7 @@ form {
   font-family: Inter, san-serif;
   font-weight: 400;
   color: #0f0f10;
+  position: relative;
 }
 
 .main-container {
@@ -171,6 +172,17 @@ footer {
   padding: 50px 7vw;
 }
 
+.side-menu-container {
+  background-color: rgba(255, 255, 255, 0.6549019608);
+  -webkit-backdrop-filter: blur(15px);
+          backdrop-filter: blur(15px);
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  z-index: 50;
+}
+
 .side-menu {
   max-width: 450px;
   height: 100%;
@@ -179,7 +191,7 @@ footer {
   right: 0;
   z-index: 10;
   background-color: #fff;
-  display: none;
+  box-shadow: 0px 5px 10px #b3b3b3;
 }
 
 .side-menu-block {

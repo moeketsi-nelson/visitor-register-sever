@@ -1,10 +1,10 @@
 const express = require("express");
 const router = express.Router();
-const { protect } = require("../middleware/auth");
+const { isAuth } = require("../middleware/auth");
 
 const { visit, findVisitor } = require("../controllers/visitor");
 
-router.post("/new", protect, visit);
-router.post("/find", protect, findVisitor);
+router.post("/new", isAuth , visit);
+router.post("/find", isAuth, findVisitor);
 
 module.exports = router;

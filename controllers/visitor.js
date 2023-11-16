@@ -3,17 +3,17 @@ const Visitor = require("../models/visitor");
 const ErrorResponse = require("../utils/errorResponse");
 
 exports.visit = async (req, res, next) => {
-  const { authorization } = req.headers;
+  // const { authorization } = req.headers;
   const { name, surname, id, email, reason, cellno, branch } = req.body;
-  const token = authorization.split(" ")[1];
+  // const token = authorization.split(" ")[1];
 
   try {
     const visitorFromDB = await Visitor.findOne({ id });
 
     if (!visitorFromDB) {
-      const decoded = JWT.verify(token, process.env.JWT_SECRET);
+      // const decoded = JWT.verify(token, process.env.JWT_SECRET);
 
-      console.log(req.body)
+      // console.log(req.body)
 
       const visitor = new Visitor({
         name,
@@ -23,17 +23,19 @@ exports.visit = async (req, res, next) => {
         cellno,
       });
 
-      visitor.visits.push({ reason: reason, date: new Date(), branch});
-      visitor.save();
+      visitor.visits.push({ reason: reason, date: new Date(), branch });
+      await visitor.save();
     }
 
-    visitorFromDB.visits.push({ reason: reason , date: new Date(), branch});
+    visitorFromDB.visits.push({ reason: reason, date: new Date(), branch });
     await visitorFromDB.save();
 
-    res.status(201).json({
-      success: true,
-      message: "visitor registered",
-    });
+    res.redirect("/register-visitor");
+
+    // res.status(201).json({
+    //   success: true,
+    //   message: "visitor registered",
+    // });
   } catch (error) {
     return next(new ErrorResponse(error, 500));
   }

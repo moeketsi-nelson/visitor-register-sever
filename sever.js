@@ -8,6 +8,7 @@ const path = require("path");
 const helmet = require("helmet");
 const session = require("express-session");
 const MongoDBSession = require("connect-mongodb-session")(session);
+const { isAuth } = require('./middleware/auth');
 
 connectDB();
 
@@ -49,9 +50,9 @@ app.get("/", (req, res, next) => {
   res.render("login");
 });
 
-app.get("/register-visitor", (req, res, next) => {
-  req.session.isAuth = true;
-  console.log(req.session.id)
+app.get("/register-visitor", isAuth ,(req, res, next) => {
+  // req.session.isAuth = true;
+  // console.log(req.session.id)
   res.render("visitor-register");
 });
 

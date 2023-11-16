@@ -21,8 +21,8 @@ const visitorSchema = new Schema({
   cellno: {
     type: String,
     required: true,
-    min: [10, "Cell-no length shorter than expected"],
-    max: [10, "Cell-no length longer than expected"],
+    min: [12, "Cell-no length shorter than expected"],
+    max: [12, "Cell-no length longer than expected"],
   },
   email: {
     type: String,

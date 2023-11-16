@@ -43,6 +43,7 @@ form {
   font-family: Inter, san-serif;
   font-weight: 400;
   color: #0f0f10;
+  position: relative;
 }
 
 .main-container {
@@ -87,7 +88,8 @@ button {
   font-weight: 500;
   font-size: 1em;
   color: white;
-  width: 50%;
+  width: calc(50%);
+  // height: 40px;
   padding: 14px;
   background-color: #f48420;
   border: none;
@@ -173,6 +175,18 @@ footer {
   padding: 50px 7vw;
 }
 
+.side-menu-container {
+  background-color: #ffffffa7;
+  backdrop-filter: blur(15px);
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top:0;
+  z-index: 50;
+  // opacity: 0.1;
+    // display: none;
+}
+
 .side-menu {
   max-width: 450px;
   height: 100%;
@@ -181,7 +195,8 @@ footer {
   right: 0;
   z-index: 10;
   background-color: #fff;
-  display: none;
+  box-shadow: 0px 5px 10px #b3b3b3;
+
 }
 
 .side-menu-block {
@@ -233,7 +248,7 @@ select {
 }
 
 select:focus {
-outline: 3px solid #f48420;
+  outline: 3px solid #f48420;
 }
 
 @media screen and (max-width: 670px) {

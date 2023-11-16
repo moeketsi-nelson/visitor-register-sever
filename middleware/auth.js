@@ -42,7 +42,7 @@ exports.protect = async (req, res, next) => {
 
 exports.isAuth = async (req, res, next) => {
   if (!req.session.isAuth) {
-    res.redirect("/login");
+    res.redirect("/");
   } else {
     next();
   }

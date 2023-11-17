@@ -3,7 +3,6 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="index.js" defer></script>
     <link rel="stylesheet" href="style.css" />
     <title>Logs</title>
   </head>
@@ -26,13 +25,12 @@
       </svg>
     </nav>
     <div class="main-container">
-      <h1 class="heading">Visitors Register</h1>
+      <h1 class="heading">Guest Register</h1>
       <main>
-        <form action="/api/visitor/new" method="post">
-          <span class="message"></span>
+        <form action="http://localhost:3000/new" method="post">
           <div class="input-fields">
             <span class="legend">
-              <label for="name">Name: </label>
+              <label for="firstname">Name: </label>
               <input
                 type="text"
                 name="name"
@@ -60,7 +58,6 @@
                 name="id"
                 id="id"
                 pattern="[0-9]{13}"
-                min="13"
                 placeholder="2012175333080"
                 required
               />
@@ -72,6 +69,7 @@
                 type="text"
                 name="cellno"
                 id="cellno"
+                pattern="[0-9]{10}"
                 placeholder="012-345-6789"
                 required
               />
@@ -87,38 +85,7 @@
                 required
               />
             </span>
-
-            <span class="legend">
-              <label for="branch">Branch: </label>
-              <select name="branch" id="branch">
-                <option value="Tshwane">Tshwane</option>
-                <option value="Johannesburg">Johannesburg</option>
-                <option value="Gauteng Provincial Office">
-                  Gauteng Provincial Office
-                </option>
-                <option value="Ekurhuleni">Ekurhuleni</option>
-                <option value="Mamelodi">Mamelodi</option>
-                <option value="Attredgeville">Attredgeville</option>
-                <option value="Olievenhoutbosch">Olievenhoutbosch</option>
-                <option value="Cullinan">Cullinan</option>
-                <option value="Bronkhorspruit">Bronkhorspruit</option>
-                <option value="Mabopane">Mabopane</option>
-              </select>
-            </span>
-
-            <span class="legend">
-              <label for="reason-for-visit">Reason for visit: </label>
-              <textarea
-                cols="80"
-                type="text"
-                name="reason"
-                id="reason-for-visit"
-                placeholder="Reason for visit"
-                required
-              ></textarea>
-            </span>
           </div>
-
           <button type="submit" id="form-submit">Submit</button>
         </form>
       </main>
@@ -168,26 +135,9 @@
         </div>
 
         <ul>
-          <li>
-            <form action="/" method="get">
-              <button class="btn-no-styles" type="submit" id="form-submit">Register Visitor</button>
-            </form>
-          </li>
-          <li>
-            <form action="/" method="get">
-              <button class="btn-no-styles"type="submit" id="form-submit">Create Event</button>
-            </form>
-          </li>
-          <li>
-            <form action="/" method="get">
-              <button class="btn-no-styles"type="submit" id="form-submit">Register Guest</button>
-            </form>
-          </li>
-          <li>
-            <form action="/" method="get">
-              <button class="btn-no-styles"type="submit" id="form-submit">Logout</button>
-            </form>
-          </li>
+          <li><a href="#">Home</a></li>
+          <li><a href="#">Create Event</a></li>
+          <li><a href="#">Placeholder</a></li>
         </ul>
       </div>
     </div>

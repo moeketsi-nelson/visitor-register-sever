@@ -65,5 +65,18 @@
       <strong>Email: </strong
       ><a href="mailto:info@seda.org.za">info@seda.org.za</a>
     </footer>
+    <script>
+      const btn = document.getElementById("menu-btn");
+      const backBtn = document.querySelector(".side-menu-back-arrow");
+      const sideMenu = document.querySelector(".side-menu-container");
+
+      backBtn.addEventListener("click", () => {
+        sideMenu.style.display = "none";
+      });
+
+      btn.addEventListener("click", () => {
+        sideMenu.style.display = "block";
+      });
+    </script>
   </body>
 </html>

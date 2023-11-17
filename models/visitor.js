@@ -28,8 +28,8 @@ const visitorSchema = new Schema({
     type: String,
     required: true,
   },
-  visits: [
-    new Schema({
+  visits: [new Schema(
+    {
       reason: {
         type: String,
         required: [true, "please set a reason for visit"],

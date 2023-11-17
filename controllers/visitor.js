@@ -23,12 +23,16 @@ exports.visit = async (req, res, next) => {
         cellno,
       });
 
+      // visitor.visits[0] = { reason: reason, date: Date.now(), branch };
       visitor.visits.push({ reason: reason, date: new Date(), branch });
+      console.log(visitor);
       await visitor.save();
     }
 
-    visitorFromDB.visits.push({ reason: reason, date: new Date(), branch });
-    await visitorFromDB.save();
+    if (visitorFromDB) {
+      visitorFromDB.visits.push({ reason: reason, date: Date.now(), branch });
+      await visitorFromDB.save();
+    }
 
     res.redirect("/register-visitor");
 

@@ -177,14 +177,14 @@ footer {
 
 .side-menu-container {
   background-color: #ffffffa7;
-  backdrop-filter: blur(15px);
+  backdrop-filter: blur(20px);
   width: 100vw;
   height: 100vh;
   position: fixed;
-  top:0;
+  top: 0;
   z-index: 50;
   // opacity: 0.1;
-    // display: none;
+  display: none;
 }
 
 .side-menu {
@@ -196,7 +196,6 @@ footer {
   z-index: 10;
   background-color: #fff;
   box-shadow: 0px 5px 10px #b3b3b3;
-
 }
 
 .side-menu-block {
@@ -249,6 +248,10 @@ select {
 
 select:focus {
   outline: 3px solid #f48420;
+}
+
+.btn-no-styles {
+  background-color: none;
 }
 
 @media screen and (max-width: 670px) {

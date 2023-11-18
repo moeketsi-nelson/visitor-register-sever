@@ -27,8 +27,19 @@
     <div class="main-container">
       <h1 class="heading">Guest Register</h1>
       <main>
-        <form action="http://localhost:3000/new" method="post">
+        <form action="/api/event/register-guest" method="post">
           <div class="input-fields">
+            <span class="legend">
+              <label for="eventName">Event Name: </label>
+              <input
+                type="text"
+                name="eventName"
+                id="eventName"
+                placeholder="Name of the event you created."
+                required
+              />
+            </span>
+
             <span class="legend">
               <label for="firstname">Name: </label>
               <input
@@ -69,7 +80,7 @@
                 type="text"
                 name="cellno"
                 id="cellno"
-                pattern="[0-9]{10}"
+                pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
                 placeholder="012-345-6789"
                 required
               />

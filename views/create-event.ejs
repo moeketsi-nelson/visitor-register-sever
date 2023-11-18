@@ -10,9 +10,10 @@
   <body>
     <nav>
       <div class="logo">
-        <img src="./public/seda logo.jpg" alt="Seda Logo" class="logo-img" />
+        <img src="/seda logo.jpg" alt="Seda Logo" class="logo-img" />
       </div>
       <svg
+        id="menu-btn"
         xmlns="http://www.w3.org/2000/svg"
         height="24"
         viewBox="0 0 24 24"
@@ -27,7 +28,7 @@
     <div class="main-container">
       <h1 class="heading">Create Event</h1>
       <main>
-        <form action="http://localhost:3000/new" method="post">
+        <form action="/api/event/create" method="post">
           <div class="input-fields">
             <span class="legend">
               <label for="firstname">Event Name: </label>
@@ -60,6 +61,24 @@
                 placeholder=""
                 required
               />
+            </span>
+
+            <span class="legend">
+              <label for="branch">Branch: </label>
+              <select name="branch" id="branch">
+                <option value="Tshwane">Tshwane</option>
+                <option value="Johannesburg">Johannesburg</option>
+                <option value="Gauteng Provincial Office">
+                  Gauteng Provincial Office
+                </option>
+                <option value="Ekurhuleni">Ekurhuleni</option>
+                <option value="Mamelodi">Mamelodi</option>
+                <option value="Attredgeville">Attredgeville</option>
+                <option value="Olievenhoutbosch">Olievenhoutbosch</option>
+                <option value="Cullinan">Cullinan</option>
+                <option value="Bronkhorspruit">Bronkhorspruit</option>
+                <option value="Mabopane">Mabopane</option>
+              </select>
             </span>
           </div>
           <button type="submit" id="form-submit">Submit</button>
@@ -151,5 +170,18 @@
       <strong>Email: </strong
       ><a href="mailto:info@seda.org.za">info@seda.org.za</a>
     </footer>
+    <script>
+      const btn = document.getElementById("menu-btn");
+      const backBtn = document.querySelector(".side-menu-back-arrow");
+      const sideMenu = document.querySelector(".side-menu-container");
+
+      backBtn.addEventListener("click", () => {
+        sideMenu.style.display = "none";
+      });
+
+      btn.addEventListener("click", () => {
+        sideMenu.style.display = "block";
+      });
+    </script>
   </body>
 </html>

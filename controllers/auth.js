@@ -15,19 +15,15 @@ exports.login = async (req, res, next) => {
     const user = await User.findOne({ branch }).select("+password");
 
     if (!user) {
-      res.send({
-        message: "User does not exist",
-      });
+      res.redirect("/");
     }
 
     const isMatch = await user.matchPasswords(password);
 
     if (!isMatch) {
-      // res.render("login", {
-      //   message: "Incorrect password",
-      // });
+      res.redirect("/");
 
-      res.send("error")
+      // res.send("error")
     }
 
     req.session.isAuth = true;

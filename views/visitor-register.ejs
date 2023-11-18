@@ -26,8 +26,13 @@
       </svg>
     </nav>
     <div class="main-container">
-      <h1 class="heading">Visitors Register</h1>
+      <h1 class="heading">Visitors Register 
+        
+        </h1>
       <main>
+        <% if (messagge) { %>
+          <%= <h4>message</h4> %>
+        <% } %>
         <form action="/api/visitor/new" method="post">
           <span class="message"></span>
           <div class="input-fields">
@@ -170,22 +175,30 @@
         <ul>
           <li>
             <form action="/" method="get">
-              <button class="btn-no-styles" type="submit" id="form-submit">Register Visitor</button>
+              <button class="btn-no-styles" type="submit" id="form-submit">
+                Register Visitor
+              </button>
             </form>
           </li>
           <li>
             <form action="/" method="get">
-              <button class="btn-no-styles"type="submit" id="form-submit">Create Event</button>
+              <button class="btn-no-styles" type="submit" id="form-submit">
+                Create Event
+              </button>
             </form>
           </li>
           <li>
             <form action="/" method="get">
-              <button class="btn-no-styles"type="submit" id="form-submit">Register Guest</button>
+              <button class="btn-no-styles" type="submit" id="form-submit">
+                Register Guest
+              </button>
             </form>
           </li>
           <li>
             <form action="/" method="get">
-              <button class="btn-no-styles"type="submit" id="form-submit">Logout</button>
+              <button class="btn-no-styles" type="submit" id="form-submit">
+                Logout
+              </button>
             </form>
           </li>
         </ul>

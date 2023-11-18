@@ -10,12 +10,14 @@ exports.createEvent = async (req, res, next) => {
     const eventFromDB = await Event.find({ name });
 
     if (eventFromDB.name === name) {
-      return next(
-        new ErrorResponse(
-          "Event already exists. please use a diffent name",
-          409
-        )
-      );
+      // return next(
+      //   new ErrorResponse(
+      //     "Event already exists. please use a diffent name",
+      //     409
+      //   )
+      // );
+
+      res.redirect("/register-guest");
     }
 
     const event = new Event({
@@ -27,10 +29,12 @@ exports.createEvent = async (req, res, next) => {
 
     event.save();
 
-    res.status(201).json({
-      success: true,
-      link: "example.com",
-    });
+    // res.status(201).json({
+    //   success: true,
+    //   link: "example.com",
+    // });
+
+    res.redirect("/register-guest");
   } catch (error) {
     return next(new ErrorResponse(error, 500));
   }
@@ -58,21 +62,25 @@ exports.findEvent = async (req, res, next) => {
 };
 
 exports.registerGuest = async (req, res, next) => {
-  const { authorization } = req.headers;
-  const { name, surname, id, cellno, email } = req.body;
-  const token = authorization.split(" ")[1];
+  // const { authorization } = req.headers;
+  const { name, surname, id, cellno, email , eventName} = req.body;
+  // const token = authorization.split(" ")[1];
 
   try {
-    const decoded = JWT.verify(token, process.env.JWT_SECRET2);
+    // const decoded = JWT.verify(token, process.env.JWT_SECRET2);
 
-    const eventFromDB = await Event.findOne({ name: decoded.name });
+    const eventFromDB = await Event.findOne({ name: eventName });
 
     if (!eventFromDB) {
-      return next(new ErrorResponse("Event does not exist", 404));
+      res.redirect("/create-event");
+      // return next(new ErrorResponse("Event does not exist", 404));
     }
 
-    eventFromDB.guests.push({ name, surname, id, cellno, email });
-    await eventFromDB.save();
+    if (eventFromDB) {
+      eventFromDB.guests.push({ name, surname, id, cellno, email });
+      await eventFromDB.save();
+    }
+    
 
     res.status(201).json({
       success: true,

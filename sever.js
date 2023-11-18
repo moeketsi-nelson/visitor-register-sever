@@ -49,13 +49,12 @@ app.use("/api/event", require("./routes/event"));
 app.use("/api/visitor", require("./routes/visitor"));
 
 app.get("/", (req, res, next) => {
-  let hi = "hi";
-  res.render("login", { message: hi });
+  res.render("login", { message: "" });
   // res.render('visitor-register')
 });
 
 app.get("/register-visitor", isAuth, (req, res, next) => {
-  res.render("visitor-register");
+  res.render("visitor-register", { message: "" });
 });
 
 app.get("/register-guest", isAuth, (req, res, next) => {

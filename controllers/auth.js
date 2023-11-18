@@ -6,8 +6,13 @@ exports.login = async (req, res, next) => {
   const { branch, password } = req.body;
 
   if (!branch || !password) {
-    res.render('login', {
-      message: "please privide branch name and password"
+    // let data = {
+    //   message: "Please privide branch name and password",
+    //   focus: ["branch", "password"],
+    // };
+    res.render("login", {
+      message: "Please privide branch name and password",
+      focus: ["branch", "password"],
     });
   }
 
@@ -15,17 +20,30 @@ exports.login = async (req, res, next) => {
     const user = await User.findOne({ branch }).select("+password");
 
     if (!user) {
-      res.redirect("/");
+      let data = {
+        message: "User does not exist",
+      };
+      res.render("login", {
+        message: "User does not exist",
+      });
+
+      // res.redirect("/");
     }
 
-    const isMatch = await user.matchPasswords(password);
+    if (user) {
+      const isMatch = await user.matchPasswords(password);
 
-    if (!isMatch) {
-      res.redirect("/");
+      if (!isMatch) {
+        // res.redirect("/");
 
-      // res.send("error")
+        res.render("login", {
+          message: "Please privide the correct password",
+          focus: ["branch", "password"],
+        });
+      }
+
     }
-
+    
     req.session.isAuth = true;
     // res.render("visitor-register",{message:"hi"});
     res.redirect("/register-visitor");

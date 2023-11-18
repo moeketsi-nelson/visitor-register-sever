@@ -3,9 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="index.js" defer></script>
     <link rel="stylesheet" href="style.css" />
-    <title>Logs</title>
+    <title>Visitor register</title>
   </head>
   <body>
     <nav>
@@ -26,12 +25,10 @@
       </svg>
     </nav>
     <div class="main-container">
-      <h1 class="heading">Visitors Register 
-        
-        </h1>
+      <h1 class="heading">Visitors Register</h1>
       <main>
-        <% if (messagge) { %>
-          <%= <h4>message</h4> %>
+        <% if (message) { %>
+        <h4><%=message%></h4>
         <% } %>
         <form action="/api/visitor/new" method="post">
           <span class="message"></span>

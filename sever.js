@@ -19,7 +19,7 @@ const corsOptions = {
 };
 
 app.disable("x-powered-by");
-app.set("X-Content-Type-Options", "text/html");
+// app.set("X-Content-Type-Options", "text/html");
 
 const store = new MongoDBSession({
   uri: process.env.MONGO_URI,
@@ -35,14 +35,23 @@ app.use(
   })
 );
 
-app.use(cors(corsOptions));
-// app.use(helmet());
+app.use(cors(/*corsOptions*/));
+// app.use(
+//   helmet({
+//     contentSecurityPolicy: false,
+//   })
+// );
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
 app.use(express.static("public"));
+app.use(
+  "/public",
+  express.static(__dirname + "/node_modules/signature_pad/dist/signature_pad.js")
+);
+app.use("/public", express.static(__dirname + "/test/test.js"));
 
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/event", require("./routes/event"));

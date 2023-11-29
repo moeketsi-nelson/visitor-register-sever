@@ -10,14 +10,12 @@ exports.createEvent = async (req, res, next) => {
     const eventFromDB = await Event.find({ name });
 
     if (eventFromDB.name === name) {
-      // return next(
-      //   new ErrorResponse(
-      //     "Event already exists. please use a diffent name",
-      //     409
-      //   )
-      // );
+      res.render("create-event", {
+        message: "*An Event with the same name already exists",
+        focus: ["branch", "password"],
+      });
 
-      res.redirect("/register-guest");
+      // res.redirect("/register-guest");
     }
 
     const event = new Event({
@@ -34,7 +32,12 @@ exports.createEvent = async (req, res, next) => {
     //   link: "example.com",
     // });
 
-    res.redirect("/register-guest");
+    res.render("guest-register", {
+      message: "",
+      focus: ["branch", "password"],
+    });
+
+    // res.redirect("/register-guest");
   } catch (error) {
     return next(new ErrorResponse(error, 500));
   }
@@ -63,7 +66,7 @@ exports.findEvent = async (req, res, next) => {
 
 exports.registerGuest = async (req, res, next) => {
   // const { authorization } = req.headers;
-  const { name, surname, id, cellno, email , eventName} = req.body;
+  const { name, surname, id, cellno, email, eventName } = req.body;
   // const token = authorization.split(" ")[1];
 
   try {
@@ -72,7 +75,12 @@ exports.registerGuest = async (req, res, next) => {
     const eventFromDB = await Event.findOne({ name: eventName });
 
     if (!eventFromDB) {
-      res.redirect("/create-event");
+      res.render("guest-register", {
+        message: "Create an event to register guests",
+        focus: ["branch", "password"],
+      });
+
+      // res.redirect("/create-event");
       // return next(new ErrorResponse("Event does not exist", 404));
     }
 
@@ -80,12 +88,16 @@ exports.registerGuest = async (req, res, next) => {
       eventFromDB.guests.push({ name, surname, id, cellno, email });
       await eventFromDB.save();
     }
-    
 
-    res.status(201).json({
-      success: true,
-      message: "Guest registered",
+    res.render("guest-register", {
+      message: "Success! guest registered",
+      focus: ["branch", "password"],
     });
+
+    // res.status(201).json({
+    //   success: true,
+    //   message: "Guest registered",
+    // });
   } catch (error) {
     return next(new ErrorResponse(error, 500));
   }

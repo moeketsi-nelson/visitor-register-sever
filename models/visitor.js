@@ -55,6 +55,10 @@ const visitorSchema = new Schema({
         ],
         required: [true, "Branch name is required"],
       },
+      signature: {
+        type: String,
+        required: [true, "signature is required"]
+      }
     }),
   ],
 });

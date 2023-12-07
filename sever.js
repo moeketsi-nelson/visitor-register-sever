@@ -4,11 +4,13 @@ const app = express();
 const connectDB = require("./config/database");
 const cors = require("cors");
 const errorHandler = require("./middleware/error");
-const path = require("path");
+const path = require("node:path");
 // const helmet = require("helmet");
 const session = require("express-session");
 const MongoDBSession = require("connect-mongodb-session")(session);
 const { isAuth } = require("./middleware/auth");
+const multer = require("multer");
+const upload = multer({ dest: "uploads/" });
 
 connectDB();
 
@@ -18,8 +20,11 @@ const corsOptions = {
   vary: true,
 };
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.text());
+app.use(upload.none());
 app.disable("x-powered-by");
-// app.set("X-Content-Type-Options", "text/html");
 
 const store = new MongoDBSession({
   uri: process.env.MONGO_URI,
@@ -41,17 +46,11 @@ app.use(cors(/*corsOptions*/));
 //     contentSecurityPolicy: false,
 //   })
 // );
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
 app.use(express.static("public"));
-app.use(
-  "/public",
-  express.static(__dirname + "/node_modules/signature_pad/dist/signature_pad.js")
-);
-app.use("/public", express.static(__dirname + "/test/test.js"));
 
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/event", require("./routes/event"));
@@ -67,11 +66,18 @@ app.get("/register-visitor", isAuth, (req, res, next) => {
 });
 
 app.get("/register-guest", isAuth, (req, res, next) => {
-  res.render("guest-register");
+  res.render("guest-register", { message: "" });
 });
 
 app.get("/create-event", isAuth, (req, res, next) => {
-  res.render("create-event");
+  res.render("create-event", { message: "" });
+});
+
+app.get("/signature_pad.js", (req, res) => {
+  // res.contentType("application/javascript");
+  res.sendFile(
+    path.join(__dirname, "node_modules/signature_pad/dist/signature_pad.js")
+  );
 });
 
 app.use(errorHandler);

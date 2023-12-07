@@ -12,7 +12,6 @@ exports.createEvent = async (req, res, next) => {
     if (eventFromDB.name === name) {
       res.render("create-event", {
         message: "*An Event with the same name already exists",
-        focus: ["branch", "password"],
       });
 
       // res.redirect("/register-guest");
@@ -34,7 +33,6 @@ exports.createEvent = async (req, res, next) => {
 
     res.render("guest-register", {
       message: "",
-      focus: ["branch", "password"],
     });
 
     // res.redirect("/register-guest");
@@ -66,7 +64,7 @@ exports.findEvent = async (req, res, next) => {
 
 exports.registerGuest = async (req, res, next) => {
   // const { authorization } = req.headers;
-  const { name, surname, id, cellno, email, eventName } = req.body;
+  const { name, surname, id, cellno, email, eventName, signature } = req.body;
   // const token = authorization.split(" ")[1];
 
   try {
@@ -77,7 +75,6 @@ exports.registerGuest = async (req, res, next) => {
     if (!eventFromDB) {
       res.render("guest-register", {
         message: "Create an event to register guests",
-        focus: ["branch", "password"],
       });
 
       // res.redirect("/create-event");
@@ -85,13 +82,12 @@ exports.registerGuest = async (req, res, next) => {
     }
 
     if (eventFromDB) {
-      eventFromDB.guests.push({ name, surname, id, cellno, email });
+      eventFromDB.guests.push({ name, surname, id, cellno, email, signature });
       await eventFromDB.save();
     }
 
     res.render("guest-register", {
-      message: "Success! guest registered",
-      focus: ["branch", "password"],
+      message: "Guest registered",
     });
 
     // res.status(201).json({

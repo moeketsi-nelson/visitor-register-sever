@@ -21,6 +21,10 @@ const guestSchema = new Schema({
     type: String,
     required: true,
   },
+  signature: {
+    type: String,
+    required: [true, "signature is required"],
+  },
 });
 
 module.exports = guestSchema;

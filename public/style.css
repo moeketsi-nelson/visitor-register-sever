@@ -3,7 +3,6 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-  outline: 1px dotted red;
 }
 
 body {
@@ -41,7 +40,6 @@ form {
   font-family: Inter, san-serif;
   font-weight: 400;
   color: #0f0f10;
-  position: relative;
 }
 
 .main-container {
@@ -91,7 +89,6 @@ button {
   background-color: #f48420;
   border: none;
   border-radius: 4px;
-  margin-top: 10px;
 }
 
 table {
@@ -102,7 +99,7 @@ table {
 .heading {
   font-size: 50px;
   font-family: Inter, "san-serif";
-  letter-spacing: -5;
+  letter-spacing: -3px;
   font-size: 3.5em;
   -webkit-text-decoration: underline #f48420 2px;
           text-decoration: underline #f48420 2px;
@@ -248,31 +245,47 @@ select:focus {
   outline: 3px solid #f48420;
 }
 
-.btn-no-styles {
-  background-color: none;
-}
-
 canvas {
-  /* outline: 1px solid red; */
-  border: 1px solid #d2d2d2;
-  background-color: #f9f9f9;
+  border: 1px solid rgba(0, 0, 0, 0.3764705882);
+  background-color: #fdfdfd;
+  height: 120px;
+  width: 100%;
 }
 
 .signature-pad-container {
   /* max-width: 300px; */
   display: flex;
   flex-direction: column;
-  gap: 5px;
+}
+
+.signature-pad-controls {
+  display: flex;
+  width: 100%;
 }
 
 .signature-pad-clear {
-  font-size: 1em;
-  color: white;
-  background-color: #f4831f;
-  border: none;
-  border-radius: 4px;
+  font-size: 1.5em;
+  color: #ffffff;
+  background-color: #22884e;
+  border-radius: 0px;
   padding: 10px;
   cursor: pointer;
+  height: 100%;
+  width: -moz-max-content;
+  width: max-content;
+  text-transform: uppercase;
+  text-orientation: sideways-right !important;
+}
+
+.form-submit {
+  position: relative;
+  right: 0px;
+  bottom: 0;
+}
+
+.error-span {
+  font-size: 12px;
+  color: #ff0000;
 }
 
 @media screen and (max-width: 670px) {

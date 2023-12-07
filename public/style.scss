@@ -4,7 +4,6 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-  outline: 1px dotted red;
 }
 
 body {
@@ -36,6 +35,7 @@ form {
   width: 100%;
   display: flex;
   flex-direction: column;
+
   gap: 20px;
   padding: 50px;
   box-shadow: 0px 5px 10px #b3b3b3;
@@ -43,7 +43,7 @@ form {
   font-family: Inter, san-serif;
   font-weight: 400;
   color: #0f0f10;
-  position: relative;
+  // position: static;
 }
 
 .main-container {
@@ -94,7 +94,8 @@ button {
   background-color: #f48420;
   border: none;
   border-radius: 4px;
-  margin-top: 10px;
+  // margin-top: 10px;
+  // align-self: flex-end;
 }
 
 table {
@@ -105,7 +106,7 @@ table {
 .heading {
   font-size: 50px;
   font-family: Inter, "san-serif";
-  letter-spacing: -5;
+  letter-spacing: -3px;
   font-size: 3.5em;
   text-decoration: underline #f48420 2px;
   font-weight: 400;
@@ -250,33 +251,56 @@ select:focus {
   outline: 3px solid #f48420;
 }
 
-.btn-no-styles {
-  background-color: none;
-}
+// .btn-no-styles {
+//   background-color: none;
+// }
 
 canvas {
-  /* outline: 1px solid red; */
-  border: 1px solid #d2d2d2;
-  background-color: #f9f9f9;
+  border: 1px solid #00000060;
+  background-color: #fdfdfd;
+  height: 120px;
+  width: 100%;
 }
 
 .signature-pad-container {
   /* max-width: 300px; */
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  // gap: 5px;
+}
+
+.signature-pad-controls {
+  display: flex;
+  width: 100%;
 }
 
 .signature-pad-clear {
-  font-size: 1em;
-  color: white;
-  background-color: #f4831f;
-  border: none;
-  border-radius: 4px;
+  font-size: 1.5em;
+  color: #ffffff;
+  background-color: #22884e;
+  // border: 1px solid #00000025;
+  border-radius: 0px;
   padding: 10px;
   cursor: pointer;
+  height: 100%;
+  width: max-content;
+  text-transform: uppercase;
+  // text-align: right;
+  text-orientation: sideways-right !important;
+  // box-shadow: 0px 5px 10px #00000037;
 }
 
+.form-submit {
+  position: relative;
+  right: 0px;
+  bottom: 0;
+  // outline: #000000 5px dotted;
+}
+
+.error-span {
+  font-size: 12px;
+  color: #ff0000;
+}
 
 @media screen and (max-width: 670px) {
   .input-fields {

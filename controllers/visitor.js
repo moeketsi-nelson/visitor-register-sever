@@ -4,7 +4,8 @@ const ErrorResponse = require("../utils/errorResponse");
 
 exports.visit = async (req, res, next) => {
   // const { authorization } = req.headers;
-  const { name, surname, id, email, reason, cellno, branch } = req.body;
+  const { name, surname, id, email, reason, cellno, branch, signature } =
+    req.body;
   // const token = authorization.split(" ")[1];
 
   try {
@@ -24,22 +25,31 @@ exports.visit = async (req, res, next) => {
       });
 
       // visitor.visits[0] = { reason: reason, date: Date.now(), branch };
-      visitor.visits.push({ reason: reason, date: new Date(), branch });
-      console.log(visitor);
+      visitor.visits.push({
+        reason,
+        date: new Date(),
+        branch,
+        signature,
+      });
+      console.log(req.body);
       await visitor.save();
     }
 
     if (visitorFromDB) {
-      visitorFromDB.visits.push({ reason: reason, date: Date.now(), branch });
+      visitorFromDB.visits.push({
+        reason,
+        date: Date.now(),
+        branch,
+        signature,
+      });
       await visitorFromDB.save();
     }
 
-    res.redirect("/register-visitor");
-
-    // res.status(201).json({
+    // return res.render("visitor-register",{
     //   success: true,
     //   message: "visitor registered",
     // });
+    res.json({ any: "yay" });
   } catch (error) {
     return next(new ErrorResponse(error, 500));
   }

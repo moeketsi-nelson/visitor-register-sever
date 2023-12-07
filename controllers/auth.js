@@ -5,8 +5,6 @@ const ErrorResponse = require("../utils/errorResponse");
 exports.login = async (req, res, next) => {
   const { branch, password } = req.body;
 
-
-
   if (!branch || !password) {
     res.render("login", {
       message: "Please privide branch name and password",

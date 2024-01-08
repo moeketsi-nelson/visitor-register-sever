@@ -3,19 +3,13 @@ const Visitor = require("../models/visitor");
 const ErrorResponse = require("../utils/errorResponse");
 
 exports.visit = async (req, res, next) => {
-  // const { authorization } = req.headers;
   const { name, surname, id, email, reason, cellno, branch, signature } =
     req.body;
-  // const token = authorization.split(" ")[1];
 
   try {
     const visitorFromDB = await Visitor.findOne({ id });
 
     if (!visitorFromDB) {
-      // const decoded = JWT.verify(token, process.env.JWT_SECRET);
-
-      // console.log(req.body)
-
       const visitor = new Visitor({
         name,
         surname,
@@ -24,7 +18,6 @@ exports.visit = async (req, res, next) => {
         cellno,
       });
 
-      // visitor.visits[0] = { reason: reason, date: Date.now(), branch };
       visitor.visits.push({
         reason,
         date: new Date(),
@@ -45,21 +38,17 @@ exports.visit = async (req, res, next) => {
       await visitorFromDB.save();
     }
 
-    // return res.render("visitor-register",{
-    //   success: true,
-    //   message: "visitor registered",
-    // });
-    res.json({ any: "yay" });
+    // req.flash("message", "Visitor registered!");
+    return (req.flash("message", "Visitor registered!"),res.redirect("/register-visitor"));
+    // res.redirect("/regi");
   } catch (error) {
     return next(new ErrorResponse(error, 500));
   }
 };
 
 exports.findVisitor = async (req, res, next) => {
-  const { dateTo, dateFrom } = req.body;
-
   try {
-    console.log(req.body);
+    console.log(searchObjectBuilder(req.body));
     const visitorFromDB = await Visitor.find(searchObjectBuilder(req.body));
     if (!visitorFromDB || visitorFromDB.length === 0) {
       return next(new ErrorResponse("Visitors not found", 404));
@@ -73,8 +62,21 @@ exports.findVisitor = async (req, res, next) => {
 
 function searchObjectBuilder(reqBody) {
   let obj = {};
+
   Object.keys(reqBody).map((key) => {
-    if (key !== "dateTo" && key !== "dateFrom") {
+    if (key === "branch" && reqBody[key] !== "") {
+      obj["visits.branch"] = reqBody[key];
+    } else if (key === "dateFrom" && reqBody[key] !== "") {
+      if (!obj["visits.date"]) {
+        obj["visits.date"] = {};
+      }
+      obj["visits.date"].$gt = new Date(reqBody[key]).toISOString();
+    } else if (key === "dateTo" && reqBody[key] !== "") {
+      if (!obj["visits.date"]) {
+        obj["visits.date"] = {};
+      }
+      obj["visits.date"].$lt = new Date(reqBody[key]).toISOString();
+    } else {
       if (reqBody[key] !== "" && reqBody[key] !== undefined) {
         obj[key] = reqBody[key];
       }
@@ -83,4 +85,3 @@ function searchObjectBuilder(reqBody) {
 
   return obj;
 }
-//{ "visits.date": { $lte: dateTo } }

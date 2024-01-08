@@ -40,7 +40,7 @@ main {
   padding: 30px;
   font-weight: 400;
   -webkit-text-decoration: underline 1px #f48420;
-          text-decoration: underline 1px #f48420;
+  text-decoration: underline 1px #f48420;
   font-size: 1.5rem;
 }
 
@@ -108,6 +108,13 @@ footer {
   padding: 50px 7vw;
 }
 
+.login-error-message {
+  text-align: center;
+  color: red;
+  margin-bottom: 15px;
+  font-size: smaller;
+}
+
 @media screen and (min-width: 450px) {
   .form-container {
     margin-top: 100px;
@@ -116,4 +123,4 @@ footer {
   form {
     padding: 0 40px 50px;
   }
-}/*# sourceMappingURL=login-styles.css.map */
+} /*# sourceMappingURL=login-styles.css.map */

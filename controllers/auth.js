@@ -8,7 +8,6 @@ exports.login = async (req, res, next) => {
   if (!branch || !password) {
     res.render("login", {
       message: "Please privide branch name and password",
-      focus: ["branch", "password"],
     });
   }
 
@@ -16,8 +15,8 @@ exports.login = async (req, res, next) => {
     const user = await User.findOne({ branch }).select("+password");
 
     if (!user) {
-      res.render("login", {
-        message: "User does not exist",
+      return res.render("login", {
+        message: "*User does not exist",
       });
     }
 
@@ -25,9 +24,8 @@ exports.login = async (req, res, next) => {
       const isMatch = await user.matchPasswords(password);
 
       if (!isMatch) {
-        res.render("login", {
-          message: "Please privide the correct password",
-          focus: ["branch", "password"],
+        return res.render("login", {
+          message: "*Please privide the correct password",
         });
       }
     }
@@ -36,7 +34,11 @@ exports.login = async (req, res, next) => {
       req.session.isAuth = true;
     }
 
-    res.redirect("/register-visitor");
+    if (branch === "Admin") {
+      req.session.isAdmin = true;
+    }
+
+    return res.redirect("/register-visitor");
   } catch (error) {
     return next(new ErrorResponse(error, 500));
   }

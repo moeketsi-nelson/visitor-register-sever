@@ -3,79 +3,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="style.css" />
   <title>Visitor register</title>
+
   <script type="module" defer>
     import SignaturePad from "./signature_pad.js";
-    let canvass = document.querySelector("canvas");
-    const clearBtn = document.querySelector(".signature-pad-clear");
-    const submit = document.querySelector("#form-submit");
-    const form = document.querySelector("form");
-
-    const signaturePad = new SignaturePad(canvass, {
-      penColor: "rgb(244, 131, 31)",
-    });
-
-    document.querySelector("#name").addEventListener("keyup", validateName);
-
-    function validateName() {
-      let name = document.querySelector("#name").value;
-      let nameError = document.querySelector("#nameError");
-
-      if (name === "" || name === null) {
-        nameError.innerText = "*Please provide a name.";
-        return false;
-      }
-
-      if (name.match(/[^a-z]+/gi)) {
-        nameError.innerText = "*Only characters A-Z allowed.";
-        return false;
-      }
-
-      nameError.innerText = "";
-      return true;
-    }
-
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      let formDatas = new FormData(form, submit);
-      let svG = signaturePad.toSVG();
-      formDatas.append("signature", svG);
-
-      var myHeaders = new Headers();
-      myHeaders.append("Content-Type", "application/json");
-
-      let jSONObj = {};
-      for (const [key, value] of formDatas.entries()) {
-        jSONObj[key] = value;
-      }
-
-      let requestOptions = {
-        method: "POST",
-        body: JSON.stringify(jSONObj),
-        headers: myHeaders,
-      };
-
-      console.log(jSONObj);
-      let rq = await fetch("/api/visitor/new", requestOptions)
-        .then((response) => response.json())
-        .then((result) => console.log(result))
-        .catch((error) => console.log("error", error));
-    });
-
-    function resizeCanvas() {
-      const ratio = Math.max(window.devicePixelRatio || 1, 1);
-      canvass.width = canvass.offsetWidth * ratio;
-      canvass.height = canvass.offsetHeight * ratio;
-      canvass.getContext("2d").scale(ratio, ratio);
-      signaturePad.clear();
-    }
-
-    window.addEventListener("resize", resizeCanvas);
-    resizeCanvas();
-
-    clearBtn.addEventListener("click", (e) => {
-      e.preventDefault();
-      signaturePad.clear();
-    });
   </script>
-  <script type="module" defer></script>
 </head>

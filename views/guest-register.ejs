@@ -6,74 +6,107 @@
     <div class="main-container">
       <h1 class="heading">Guest Register</h1>
       <main>
-        <form action="/api/event/register-guest" method="post">
-          <% if (message) { %>
+        <form>
           <p><%= message %></p>
-          <% } %>
+
           <div class="input-fields">
             <span class="legend">
-              <label for="eventName">Event Name: </label>
+              <label for="eventName"
+                >Event Name:
+                <span id="eventError" class="error-span"></span>
+              </label>
               <input
                 type="text"
                 name="eventName"
                 id="eventName"
-                placeholder="Name of the event you created."
+                placeholder="Name of the event."
+                onchange="validateEvent('eventName', 'eventError')"
+                oninput="validateEvent('eventName', 'eventError')"
+                onkeyup="validateEvent('eventName', 'eventError')"
                 required
               />
             </span>
 
             <span class="legend">
-              <label for="firstname">Name: </label>
+              <label for="name"
+                >Name:
+                <span id="nameError" class="error-span"></span>
+              </label>
               <input
                 type="text"
                 name="name"
                 id="name"
                 placeholder="John"
+                onchange="validateName('name', 'nameError')"
+                oninput="validateName('name', 'nameError')"
+                onkeyup="validateName('name', 'nameError')"
                 required
               />
             </span>
 
             <span class="legend">
-              <label for="surname">Surname: </label>
+              <label for="surname"
+                >Surname:
+                <span id="surnameError" class="error-span"></span>
+              </label>
               <input
                 type="text"
                 name="surname"
                 id="surname"
                 placeholder="Doe"
+                onchange="validateSurname('surname', 'surnameError')"
+                oninput="validateSurname('surname', 'surnameError')"
+                onkeyup="validateSurname('surname', 'surnameError')"
                 required
               />
             </span>
 
             <span class="legend">
-              <label for="id">Id: </label>
+              <label for="id"
+                >Id:
+                <span id="idError" class="error-span"></span>
+              </label>
               <input
                 type="text"
                 name="id"
                 id="id"
-                pattern="[0-9]{13}"
+                onchange="validateID('id', 'idError')"
+                oninput="validateID('id', 'idError')"
+                onkeyup="validateID('id', 'idError')"
                 placeholder="2012175333080"
                 required
               />
             </span>
 
             <span class="legend">
-              <label for="cellno">Cell-no: </label>
+              <label for="cellno"
+                >Cell-no:
+                <span id="cellError" class="error-span"></span>
+              </label>
               <input
                 type="text"
                 name="cellno"
                 id="cellno"
-                pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+                onchange="validateCell('cellno', 'cellError')"
+                oninput="validateCell('cellno', 'cellError')"
+                onkeyup="validateCell('cellno', 'cellError')"
                 placeholder="012-345-6789"
                 required
               />
             </span>
 
             <span class="legend">
-              <label for="email">Email: </label>
+              <label for="email"
+                >Email:
+                <span id="emailError" class="error-span"></span>
+              </label>
               <input
                 type="email"
                 name="email"
                 id="email"
+                onchange="validateEmail('email', 'emailError')"
+                oninput="validateEmail('email', 'emailError')"
+                onkeyup="validateEmail('email', 'emailError')"
                 placeholder="example@example.com"
                 required
               />
@@ -81,20 +114,25 @@
 
             <div class="signature-pad-container">
               <span class="legend">
-                <label for="signature">Signature: </label>
+                <label for="signature"
+                  >Signature:
+                  <span id="signatureError" class="error-span"></span>
+                </label>
                 <span class="signature-pad-controls">
                   <canvas> </canvas>
                   <button class="signature-pad-clear">Clear</button>
                 </span>
               </span>
             </div>
+            <div class="empty-div"></div>
+            <button type="submit" id="form-submit">Submit</button>
           </div>
-          <button type="submit" id="form-submit">Submit</button>
         </form>
       </main>
     </div>
 
     <%- include('common/sideMenu') %> <%- include('common/footer') %> <%-
-    include('common/script') %>
+    include('common/script') %> <%- include('common/validators') %> <%-
+    include('form-handlers/guest-form-handler') %>
   </body>
 </html>

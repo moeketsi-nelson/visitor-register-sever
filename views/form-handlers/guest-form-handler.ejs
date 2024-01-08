@@ -1,0 +1,73 @@
+<script type="module" defer>
+  import SignaturePad from "./signature_pad.js";
+  let canvass = document.querySelector("canvas");
+  const clearBtn = document.querySelector(".signature-pad-clear");
+  const submit = document.querySelector("#form-submit");
+  const form = document.querySelector("form");
+
+  const signaturePad = new SignaturePad(canvass);
+
+  signaturePad.addEventListener("endStroke", () => {
+    document.querySelector("#signatureError").innerText = "";
+  });
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    let svG = signaturePad.toSVG();
+    let formDatas = new FormData(form);
+    let myHeaders = new Headers();
+    let requestOptions = {
+      method: "POST",
+      body: form2JSON(formDatas),
+      headers: myHeaders,
+    };
+
+    if (signaturePad.isEmpty()) {
+      document.querySelector("#signatureError").innerText =
+        "*Please provide signature.";
+      return;
+    }
+
+    formDatas.append("signature", svG);
+    myHeaders.append("Content-Type", "application/json");
+
+    console.log(form2JSON(formDatas));
+    formDatas.append("signature", svG);
+
+    await fetch("/api/event/register-guest", requestOptions)
+      .then((response) => response.json())
+      .then((result) => {
+        console.log(result);
+        // document.querySelector("#message-from-server").innerText =
+        //   result.message;
+      })
+      .catch((error) => console.log("error", error));
+  });
+
+  function resizeCanvas() {
+    const ratio = Math.max(window.devicePixelRatio || 1, 1);
+    canvass.width = canvass.offsetWidth * ratio;
+    canvass.height = canvass.offsetHeight * ratio;
+    canvass.getContext("2d").scale(ratio, ratio);
+    signaturePad.clear();
+  }
+
+  window.addEventListener("resize", resizeCanvas);
+  resizeCanvas();
+
+  clearBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    signaturePad.clear();
+  });
+
+  function form2JSON(form) {
+    let jSONObj = {};
+
+    for (const [key, value] of form.entries()) {
+      jSONObj[key] = value;
+    }
+
+    return JSON.stringify(jSONObj);
+  }
+</script>

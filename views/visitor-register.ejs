@@ -6,11 +6,11 @@
     <div class="main-container">
       <h1 class="heading">Visitors Register</h1>
       <main>
-        <% if (message) { %>
-        <h4><%=message%></h4>
+        <% if(message){ %>
+        <p id="message-from-server"><%= message %></p>
         <% } %>
         <form>
-          <span class="message"></span>
+          <span class="message"><%- message %></span>
           <div class="input-fields">
             <span class="legend">
               <label for="name"
@@ -22,6 +22,9 @@
                 name="name"
                 id="name"
                 placeholder="John"
+                onkeyup="validateName('name','nameError')"
+                onchange="validateName('name','nameError')"
+                oninput="validateName('name', 'nameError')"
                 required
               />
             </span>
@@ -36,6 +39,9 @@
                 name="surname"
                 id="surname"
                 placeholder="Doe"
+                onchange="validateSurname('surname', 'surnameError')"
+                onkeyup="validateSurname('surname', 'surnameError')"
+                oninput="validateSurname('surname', 'surnameError')"
                 required
               />
             </span>
@@ -51,6 +57,9 @@
                 id="id"
                 pattern="[0-9]{13}"
                 min="13"
+                onkeyup="validateID('id', 'idError')"
+                onchange="validateID('id', 'idError')"
+                oninput="validateID('id', 'idError')"
                 placeholder="2012175333080"
                 required
               />
@@ -66,6 +75,9 @@
                 name="cellno"
                 id="cellno"
                 placeholder="012-345-6789"
+                onkeyup="validateCell('cellno', 'cellError')"
+                onchange="validateCell('cellno', 'cellError')"
+                oninput="validateCell('cellno', 'cellError')"
                 required
               />
             </span>
@@ -80,6 +92,9 @@
                 name="email"
                 id="email"
                 placeholder="example@example.com"
+                onkeyup="validateEmail('email', 'emailError')"
+                onchange="validateEmail('email', 'emailError')"
+                oninput="validateEmail('email', 'emailError')"
                 required
               />
             </span>
@@ -116,7 +131,8 @@
 
             <div class="signature-pad-container">
               <span class="legend">
-                <label for="signature">Signature:
+                <label for="signature"
+                  >Signature:
                   <span id="signatureError" class="error-span"></span>
                 </label>
                 <span class="signature-pad-controls">
@@ -127,17 +143,17 @@
                 </span>
               </span>
             </div>
-          </div>
 
-          <button type="submit" id="form-submit" class="form-submit">
-            Submit
-          </button>
+            <button type="submit" id="form-submit" class="form-submit">
+              Submit
+            </button>
+          </div>
         </form>
       </main>
     </div>
 
     <%- include('common/sideMenu') %> <%- include('common/footer') %> <%-
-    include('common/script') %>
-    <!-- <%- include('common/signature-pad') %> -->
+    include('common/script') %> <%- include('common/validators') %> <%-
+    include('form-handlers/visitor-form-handler') %>
   </body>
 </html>

@@ -1,0 +1,42 @@
+<script>
+  const EventNameInput = document.querySelector("#name");
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    let formDatas = new FormData(form, submit);
+    let myHeaders = new Headers();
+
+    console.log(form2JSON(formDatas));
+
+    myHeaders.append("Content-Type", "application/json");
+
+    let requestOptions = {
+      method: "POST",
+      body: form2JSON(formDatas),
+      headers: myHeaders,
+    };
+
+    await fetch("api/event/create", requestOptions)
+      .then((response) => response.json())
+      .then((result) => {
+        console.log(result);
+        document.querySelector("#message-from-server").innerText =
+          result.message;
+        form.reset();
+        signaturePad.clear();
+      })
+      .catch((error) => console.log("error", error));
+  });
+
+  function form2JSON(form) {
+    let jSONObj = {};
+
+    for (const [key, value] of form.entries()) {
+      if (value !== "") {
+        jSONObj[key] = value;
+      }
+    }
+
+    return JSON.stringify(jSONObj);
+  }
+</script>

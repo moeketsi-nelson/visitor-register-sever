@@ -4,6 +4,8 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+  font-family: Inter, san-serif;
+  // outline: red dotted 1px;
 }
 
 body {
@@ -22,7 +24,6 @@ nav {
   justify-content: space-between;
   align-items: center;
   background-color: #ffffff;
-  // backdrop-filter: blur(20px);
   z-index: 10;
 }
 
@@ -35,15 +36,12 @@ form {
   width: 100%;
   display: flex;
   flex-direction: column;
-
   gap: 20px;
   padding: 50px;
   box-shadow: 0px 5px 10px #b3b3b3;
   border-radius: 2px;
-  font-family: Inter, san-serif;
   font-weight: 400;
   color: #0f0f10;
-  // position: static;
 }
 
 .main-container {
@@ -53,9 +51,10 @@ form {
 }
 
 .logs-section {
-  padding: 20px;
-  margin: 10px;
-  box-shadow: 0px 5px 10px #b3b3b3;
+  display: flex;
+  flex-direction: column;
+  margin-top: 50px;
+  position: relative;
   border-radius: 2px;
   width: 100%;
 }
@@ -88,14 +87,14 @@ button {
   font-weight: 500;
   font-size: 1em;
   color: white;
-  width: calc(50%);
-  // height: 40px;
-  padding: 14px;
+  padding: 14px 0 14px 0;
   background-color: #f48420;
   border: none;
   border-radius: 4px;
-  // margin-top: 10px;
-  // align-self: flex-end;
+}
+
+.table-cont {
+  overflow-x: scroll;
 }
 
 table {
@@ -105,7 +104,6 @@ table {
 
 .heading {
   font-size: 50px;
-  font-family: Inter, "san-serif";
   letter-spacing: -3px;
   font-size: 3.5em;
   text-decoration: underline #f48420 2px;
@@ -115,7 +113,6 @@ table {
 table,
 th,
 td {
-  font-family: inter, san-serif;
   border: 1px solid #00000015;
   border-collapse: collapse;
 }
@@ -143,6 +140,7 @@ main {
   margin-top: 50px;
   display: flex;
   justify-content: center;
+  flex-direction: column;
 }
 
 label {
@@ -168,7 +166,6 @@ textarea:focus {
 footer {
   margin-top: 100px;
   color: #000000;
-  font-family: inter, "san-serif";
   background-color: #e3e3e3;
   width: 100%;
   position: relative;
@@ -184,7 +181,6 @@ footer {
   position: fixed;
   top: 0;
   z-index: 50;
-  // opacity: 0.1;
   display: none;
 }
 
@@ -209,7 +205,6 @@ footer {
 
 .side-menu {
   width: 100%;
-  font-family: inter, "san-serif";
   position: fixed;
 }
 
@@ -251,10 +246,6 @@ select:focus {
   outline: 3px solid #f48420;
 }
 
-// .btn-no-styles {
-//   background-color: none;
-// }
-
 canvas {
   border: 1px solid #00000060;
   background-color: #fdfdfd;
@@ -263,10 +254,8 @@ canvas {
 }
 
 .signature-pad-container {
-  /* max-width: 300px; */
   display: flex;
   flex-direction: column;
-  // gap: 5px;
 }
 
 .signature-pad-controls {
@@ -278,28 +267,44 @@ canvas {
   font-size: 1.5em;
   color: #ffffff;
   background-color: #22884e;
-  // border: 1px solid #00000025;
   border-radius: 0px;
   padding: 10px;
   cursor: pointer;
   height: 100%;
   width: max-content;
   text-transform: uppercase;
-  // text-align: right;
-  text-orientation: sideways-right !important;
-  // box-shadow: 0px 5px 10px #00000037;
-}
-
-.form-submit {
-  position: relative;
-  right: 0px;
-  bottom: 0;
-  // outline: #000000 5px dotted;
 }
 
 .error-span {
   font-size: 12px;
   color: #ff0000;
+}
+
+.signature-svg {
+  max-width: 150px;
+  max-height: 60px;
+}
+
+.signature-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn-container {
+  display: flex;
+  gap: 5px;
+  margin-bottom: 5px;
+  align-self: flex-end;
+}
+
+.secondary-btn {
+  background-color: #22884e;
+  color: #fff;
+  max-width: max-content;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
 @media screen and (max-width: 670px) {
@@ -315,7 +320,6 @@ canvas {
     padding: 0 5vw;
   }
   form {
-    // margin: 0 20px;
     box-shadow: none;
     padding: 0;
   }
@@ -331,14 +335,15 @@ canvas {
   .heading {
     font-size: calc(2vw * 4);
   }
+
+  .button-container {
+    display: grid;
+    grid-template-columns: minmax(auto, 100%);
+  }
 }
 
 @media screen and (max-width: 450px) {
   .heading {
     font-size: 36px;
-  }
-
-  .side-menu {
-    // display: block;
   }
 }

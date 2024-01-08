@@ -1,0 +1,121 @@
+<script type="module" defer>
+  const submit = document.querySelector("#form-submit");
+  const form = document.querySelector("form");
+  const tableBody = document.querySelector("#table1");
+  const dateFromInput = document.querySelector("#dateFrom");
+  const dateToInput = document.querySelector("#dateTo");
+
+  async function request() {
+    let formDatas = new FormData(form, submit);
+    let myHeaders = new Headers();
+
+    myHeaders.append("Content-Type", "application/json");
+
+    let requestOptions = {
+      method: "POST",
+      body: form2JSON(formDatas),
+      headers: myHeaders,
+    };
+
+    await fetch("/api/visitor/find", requestOptions)
+      .then((response) => response.json())
+      .then((result) => {
+        result.map((visitor) => {
+          visitor.visits.filter(filterByDate).map((visit) => {
+            createTableRow(visitor, visit);
+          });
+        });
+      })
+      .catch((error) => console.log("error", error));
+  }
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    clearTable();
+    request();
+  });
+
+  document.querySelector("#name").addEventListener("keyup", request);
+
+  function form2JSON(form) {
+    let jSONObj = {};
+
+    for (const [key, value] of form.entries()) {
+      if (value !== "") {
+        jSONObj[key] = value;
+      }
+    }
+
+    return JSON.stringify(jSONObj);
+  }
+
+  function filterByDate(visit) {
+    if (dateFromInput.value !== "" && dateToInput !== "") {
+      if (
+        visit.date < new Date(dateFromInput.value) ||
+        visit.date > new Date(dateToInput.value)
+      ) {
+        return false;
+      }
+    }
+
+    if (dateFromInput.value !== "" && dateToInput === "") {
+      if (visit.date < new Date(dateFromInput.value)) {
+        return false;
+      }
+    }
+
+    if (dateFromInput.value === "" && dateToInput !== "") {
+      if (visit.date > new Date(dateToInput.value)) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  function createImgFromSVG(svgString) {
+    let svg = svgString;
+    let blob = new Blob([svg], { type: "image/svg+xml" });
+    let url = URL.createObjectURL(blob);
+    let img = document.createElement("img");
+    img.src = url;
+    img.className = "signature-svg";
+    img.addEventListener("load", () => URL.revokeObjectURL(url));
+
+    return img;
+  }
+
+  function createTableRow(visitor, visit) {
+    const row = document.createElement("tr");
+    const name = document.createElement("td");
+    const surname = document.createElement("td");
+    const id = document.createElement("td");
+    const cell = document.createElement("td");
+    const email = document.createElement("td");
+    const reason = document.createElement("td");
+    const date = document.createElement("td");
+    const branch = document.createElement("td");
+    const signature = document.createElement("td");
+
+    name.innerText = visitor.name;
+    surname.innerText = visitor.surname;
+    id.innerText = visitor.id;
+    cell.innerText = visitor.cellno;
+    email.innerText = visitor.email;
+    branch.innerText = visit.branch;
+    date.innerText = new Date(visit.date).toLocaleString();
+    reason.innerText = visit.reason;
+
+    signature.append(createImgFromSVG(visit.signature));
+    signature.className = "signature-container";
+
+    row.append(name, surname, id, cell, email, branch, date, reason, signature);
+
+    tableBody.append(row);
+  }
+
+  function clearTable() {
+    while (tableBody.hasChildNodes()) {
+      tableBody.removeChild(tableBody.lastChild);
+    }
+  }
+</script>

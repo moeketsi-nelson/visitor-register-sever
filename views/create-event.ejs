@@ -7,39 +7,56 @@
       <h1 class="heading">Create Event</h1>
       <main>
         <form action="/api/event/create" method="post">
-          <% if (message) { %>
-            <p><%= message %></p>
-        <% } %>
+          <p><%= message %></p>
+
           <div class="input-fields">
             <span class="legend">
-              <label for="firstname">Event Name: </label>
+              <label for="Eventname"
+                >Event Name:
+                <span id="eventError" class="error-span"></span>
+              </label>
               <input
                 type="text"
                 name="name"
                 id="name"
-                placeholder=""
+                placeholder="Event name"
+                onchange="validateEvent('name', 'eventError')"
+                oninput="validateEvent('name', 'eventError')"
+                onkeyup="validateEvent('name', 'eventError')"
                 required
               />
             </span>
 
             <span class="legend">
-              <label for="date">Date: </label>
+              <label for="date"
+                >Date:
+                <span id="dateError" class="error-span"></span>
+              </label>
               <input
                 type="date"
                 name="date"
                 id="date"
                 placeholder=""
+                onchange="validateDate('date', 'dateError')"
+                oninput="validateDate('date', 'dateError')"
+                onkeyup="validateDate('date', 'dateError')"
                 required
               />
             </span>
 
             <span class="legend">
-              <label for="id">Location: </label>
+              <label for="id"
+                >Location:
+                <span id="locationError" class="error-span"></span>
+              </label>
               <input
                 type="text"
                 name="location"
                 id="location"
-                placeholder=""
+                placeholder="Location"
+                onchange="validateLocation('location', 'locationError')"
+                oninput="validateLocation('location', 'locationError')"
+                onkeyup="validateLocation('location', 'locationError')"
                 required
               />
             </span>
@@ -61,14 +78,13 @@
                 <option value="Mabopane">Mabopane</option>
               </select>
             </span>
+            <button type="submit" id="form-submit">Submit</button>
           </div>
-          <button type="submit" id="form-submit">Submit</button>
         </form>
       </main>
     </div>
 
-    <%- include('common/sideMenu') %> 
-    <%- include('common/footer') %> 
-    <%- include('common/script') %>
+    <%- include('common/sideMenu') %> <%- include('common/footer') %> <%-
+    include('common/script') %> <%- include('common/validators') %>
   </body>
 </html>

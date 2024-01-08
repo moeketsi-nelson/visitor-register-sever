@@ -1,0 +1,162 @@
+<script>
+  function validateName(elemName, errorElem) {
+    let name = document.querySelector(`#${elemName}`).value;
+    let nameError = document.querySelector(`#${errorElem}`);
+
+    if (name === "" || name === null) {
+      nameError.innerText = "*Please provide a name.";
+      return false;
+    }
+
+    if (name.match(/[^a-z]+/gi)) {
+      nameError.innerText = "*Only characters A-Z allowed.";
+      return false;
+    }
+
+    nameError.innerText = "";
+    return true;
+  }
+
+  function validateSurname(elemName, errorElem) {
+    let surname = document.querySelector(`#${elemName}`).value;
+    let surnameError = document.querySelector(`#${errorElem}`);
+
+    if (surname === "" || surname === null) {
+      surnameError.innerText = "*Please provide a surnname.";
+      return false;
+    }
+
+    if (surname.match(/[^a-z]+/gi)) {
+      surnameError.innerText = "*Only characters A-Z allowed.";
+      return false;
+    }
+
+    surnameError.innerText = "";
+    return true;
+  }
+
+  function validateEvent(elemName, errorElem) {
+    let event = document.querySelector(`#${elemName}`).value;
+    let eventError = document.querySelector(`#${errorElem}`);
+
+    if (event === "" || event === null) {
+      eventError.innerText = "*Please provide an event name.";
+      return false;
+    }
+
+    if (event.length < 4) {
+      eventError.innerText = "*Please provide an event name";
+      return false;
+    }
+
+    eventError.innerText = "";
+    return true;
+  }
+
+  function validateID(elemName, errorElem) {
+    let id = document.querySelector(`#${elemName}`).value;
+    let idError = document.querySelector(`#${errorElem}`);
+
+    if (id === "" || id === null) {
+      idError.innerText = "*Please provide an ID number.";
+      return false;
+    }
+
+    if (id.match(/[^0-9]/)) {
+      idError.innerText = "*ID can only contain characters: 0-9.";
+      return false;
+    }
+
+    if (id.length !== 13) {
+      idError.innerText = "*Please make sure ID is the correct length";
+      return false;
+    }
+
+    idError.innerText = "";
+    return true;
+  }
+
+  function validateCell(elemName, errorElem) {
+    let cell = document.querySelector(`#${elemName}`).value;
+    let cellError = document.querySelector(`#${errorElem}`);
+
+    if (cell === "" || cell === null) {
+      cellError.innerText = "*Please provide a cell-phone number.";
+      return false;
+    }
+
+    if (!cell.match(/^[0-9]{3}-[0-9]{3}-[0-9]{4}$/)) {
+      cellError.innerText = "*Please use format: '012-345-6789'";
+      return false;
+    }
+
+    cellError.innerText = "";
+    return true;
+  }
+
+  function validateEmail(elemName, errorElem) {
+    let email = document.querySelector(`#${elemName}`).value;
+    let emailError = document.querySelector(`#${errorElem}`);
+
+    if (email === "" || email === null) {
+      emailError.innerText = "*Please provide an email.";
+      return false;
+    }
+
+    if (!email.match(/^[\w\.\_\+\-]*[@][A-Za-z]*[\.][a-z\.]{2,}$/)) {
+      emailError.innerText = "*Please provide valid email.";
+      return false;
+    }
+
+    emailError.innerText = "";
+    return true;
+  }
+
+  function validateLocation(elemName, errorElem) {
+    let location = document.querySelector(`#${elemName}`).value;
+    let locationError = document.querySelector(`#${errorElem}`);
+
+    if (location === "" || location === null) {
+      locationError.innerText = "*Please provide a location.";
+      return false;
+    }
+
+    if (location.length < 5) {
+      locationError.innerText = "*Please provide a location.";
+      return false;
+    }
+
+    locationError.innerText = "";
+    return true;
+  }
+
+  function validateDate(elemName, errorElem) {
+    let date = document.querySelector(`#${elemName}`).value;
+    let dateError = document.querySelector(`#${errorElem}`);
+
+    if (date === "" || date === null) {
+      dateError.innerText = "*Please select a date.";
+      return false;
+    }
+
+    //if (!date.match(/^[0-9]{4}[\s]\/[\s][0-9]{1,2}[\s]\/[\s][0-9]{1,2}$/)) {
+    //  dateError.innerText = "*Date format should be: yyyy/mm/dd.";
+    //  return false;
+    //}
+
+    dateError.innerText = "";
+    return true;
+  }
+
+  function validateSignature(siganture, errorElem) {
+    let signatureError = document.querySelector(`#{errorElem}`);
+
+    if (signature.isEmpty()) {
+      signatureError.innerText = "*Please provide your signature.";
+      return false;
+    }
+
+    signatureError.innerText = "";
+    return tru;
+  }
+</script>

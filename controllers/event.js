@@ -10,11 +10,10 @@ exports.createEvent = async (req, res, next) => {
     const eventFromDB = await Event.find({ name });
 
     if (eventFromDB.name === name) {
-      res.render("create-event", {
-        message: "*An Event with the same name already exists",
-      });
-
-      // res.redirect("/register-guest");
+      return (
+        req.flash("message", "An Event with the same name already exists"),
+        res.redirect("/create-event")
+      );
     }
 
     const event = new Event({
@@ -26,16 +25,7 @@ exports.createEvent = async (req, res, next) => {
 
     event.save();
 
-    // res.status(201).json({
-    //   success: true,
-    //   link: "example.com",
-    // });
-
-    res.render("guest-register", {
-      message: "",
-    });
-
-    // res.redirect("/register-guest");
+    return req.flash("message", name), res.redirect("/register-guest");
   } catch (error) {
     return next(new ErrorResponse(error, 500));
   }
@@ -73,11 +63,15 @@ exports.registerGuest = async (req, res, next) => {
     const eventFromDB = await Event.findOne({ name: eventName });
 
     if (!eventFromDB) {
-      res.render("guest-register", {
-        message: "Create an event to register guests",
-      });
+      // res.render("guest-register", {
+      //   message: "Event does not exist",
+      // });
 
-      // res.redirect("/create-event");
+      // req.flash("message", "Event does not exist.");
+      return (
+        req.flash("message", "Event does not exist."),
+        res.redirect("/register-guest")
+      );
       // return next(new ErrorResponse("Event does not exist", 404));
     }
 
@@ -86,10 +80,14 @@ exports.registerGuest = async (req, res, next) => {
       await eventFromDB.save();
     }
 
-    res.render("guest-register", {
-      message: "Guest registered",
-    });
+    // res.render("guest-register", {
+    //   message: "Guest registered",
+    // });
 
+    // req.flash("message", "Guest registered");
+    return (
+      req.flash("message", "Guest registered"), res.redirect("/register-guest")
+    );
     // res.status(201).json({
     //   success: true,
     //   message: "Guest registered",

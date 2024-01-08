@@ -5,12 +5,15 @@ const connectDB = require("./config/database");
 const cors = require("cors");
 const errorHandler = require("./middleware/error");
 const path = require("node:path");
-// const helmet = require("helmet");
+const helmet = require("helmet");
 const session = require("express-session");
 const MongoDBSession = require("connect-mongodb-session")(session);
-const { isAuth } = require("./middleware/auth");
+const { isAuth, isAdmin } = require("./middleware/auth");
 const multer = require("multer");
 const upload = multer({ dest: "uploads/" });
+const flash = require("connect-flash");
+
+const modules = require("./routes/modules");
 
 connectDB();
 
@@ -25,6 +28,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.text());
 app.use(upload.none());
 app.disable("x-powered-by");
+
+// app.use(helmet());
 
 const store = new MongoDBSession({
   uri: process.env.MONGO_URI,
@@ -46,6 +51,7 @@ app.use(cors(/*corsOptions*/));
 //     contentSecurityPolicy: false,
 //   })
 // );
+app.use(flash());
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
@@ -62,7 +68,8 @@ app.get("/", (req, res, next) => {
 });
 
 app.get("/register-visitor", isAuth, (req, res, next) => {
-  res.render("visitor-register", { message: "" });
+  console.log(req.flash("message")[0]);
+  res.render("visitor-register", { message: req.flash("message")[0] });
 });
 
 app.get("/register-guest", isAuth, (req, res, next) => {
@@ -70,15 +77,19 @@ app.get("/register-guest", isAuth, (req, res, next) => {
 });
 
 app.get("/create-event", isAuth, (req, res, next) => {
-  res.render("create-event", { message: "" });
+  console.log(req.flash("message"));
+  res.render("create-event", { message: req.flash("message")[0] });
 });
 
-app.get("/signature_pad.js", (req, res) => {
-  // res.contentType("application/javascript");
-  res.sendFile(
-    path.join(__dirname, "node_modules/signature_pad/dist/signature_pad.js")
-  );
+app.get("/admin", isAuth, isAdmin, (req, res, next) => {
+  res.render("admin", { message: "" });
 });
+
+app.get("/regi", isAuth, isAdmin, (req, res, next) => {
+  res.send(req.flash("message"));
+});
+
+modules(app);
 
 app.use(errorHandler);
 

@@ -5,13 +5,13 @@ const ErrorResponse = require("../utils/errorResponse");
 exports.protect = async (req, res, next) => {
   let token;
 
-  // if (!req.session.token) {
-  //   return next(new ErrorResponse("Not Authorized To Access This Route", 401));
-  // } else {
-  //   token = req.session.token;
-  // }
+  if (!req.session.token) {
+    return next(new ErrorResponse("Not Authorized To Access This Route", 401));
+  } else {
+    token = req.session.token;
+  }
 
-  console.log()
+  console.log();
   if (
     req.headers.authorization &&
     req.headers.authorization.startsWith("Bearer")
@@ -43,6 +43,14 @@ exports.protect = async (req, res, next) => {
 exports.isAuth = async (req, res, next) => {
   if (!req.session.isAuth) {
     res.redirect("/");
+  } else {
+    next();
+  }
+};
+
+exports.isAdmin = async (req, res, next) => {
+  if (!req.session.isAdmin) {
+    res.redirect("/register-visitor");
   } else {
     next();
   }

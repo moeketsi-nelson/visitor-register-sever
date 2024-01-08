@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login</title>
-    <link rel="stylesheet" href="login-styles.css" />
+    <link rel="stylesheet" href="/login-styles.css" />
   </head>
   <body>
     <main>
@@ -13,16 +13,15 @@
           <img src="/seda logo.jpg" alt="Seda Logo" class="logo-img" />
         </div>
 
-        
-
-        <h2 class="heading-1">Visitor Register Login </h2>
+        <h2 class="heading-1">Visitor Register Login</h2>
         <% if (message) { %>
-            <p><%= message %></p>
+        <p class="login-error-message"><%= message %></p>
         <% } %>
         <form action="/api/auth/login" method="post">
           <span class="legend">
             <label for="branch">Branch: </label>
             <select name="branch" id="branch">
+              <option value="Admin">Admin</option>
               <option value="Tshwane">Tshwane</option>
               <option value="Johannesburg">Johannesburg</option>
               <option value="Gauteng Provincial Office">
@@ -55,7 +54,5 @@
     </main>
 
     <%- include('common/footer') %>
-    <%- include('common/script') %>
-   
   </body>
 </html>

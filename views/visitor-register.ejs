@@ -6,11 +6,7 @@
     <div class="main-container">
       <h1 class="heading">Visitors Register</h1>
       <main>
-        <% if(message){ %>
-        <p id="message-from-server"><%= message %></p>
-        <% } %>
         <form>
-          <span class="message"><%- message %></span>
           <div class="input-fields">
             <span class="legend">
               <label for="name"
@@ -152,6 +148,7 @@
       </main>
     </div>
 
+    <!-- <p class="error-toast">Visitor registered!</p> -->
     <%- include('common/sideMenu') %> <%- include('common/footer') %> <%-
     include('common/script') %> <%- include('common/validators') %> <%-
     include('form-handlers/visitor-form-handler') %>

@@ -6,13 +6,16 @@ const JWT = require("jsonwebtoken");
 exports.createEvent = async (req, res, next) => {
   const { name, location, date, branch } = req.body;
 
+  console.log(req.body);
+
   try {
-    const eventFromDB = await Event.find({ name });
+    const eventFromDB = await Event.findOne({ name });
 
     if (eventFromDB.name === name) {
-      return (
-        req.flash("message", "An Event with the same name already exists"),
-        res.redirect("/create-event")
+      return res.redirect(
+        `/create-event?error=${encodeURIComponent(
+          "An event with the same name already exists."
+        )}`
       );
     }
 
@@ -25,7 +28,11 @@ exports.createEvent = async (req, res, next) => {
 
     event.save();
 
-    return req.flash("message", name), res.redirect("/register-guest");
+    return res.redirect(
+      `/create-event?message=${encodeURIComponent(
+        `Event ${name} has been created`
+      )}`
+    );
   } catch (error) {
     return next(new ErrorResponse(error, 500));
   }
@@ -68,9 +75,8 @@ exports.registerGuest = async (req, res, next) => {
       // });
 
       // req.flash("message", "Event does not exist.");
-      return (
-        req.flash("message", "Event does not exist."),
-        res.redirect("/register-guest")
+      return res.redirect(
+        `/register-guest?error=${encodeURIComponent("Event does not exist")}`
       );
       // return next(new ErrorResponse("Event does not exist", 404));
     }
@@ -85,8 +91,8 @@ exports.registerGuest = async (req, res, next) => {
     // });
 
     // req.flash("message", "Guest registered");
-    return (
-      req.flash("message", "Guest registered"), res.redirect("/register-guest")
+    return res.redirect(
+      `/register-guest?message=${encodeURIComponent("Guest registered")}`
     );
     // res.status(201).json({
     //   success: true,

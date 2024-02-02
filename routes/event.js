@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 const { isAuth } = require("../middleware/auth");
 const path = require("node:path");
-const flash = require("connect-flash");
 
 const {
   createEvent,
@@ -11,7 +10,6 @@ const {
   registerGuest,
 } = require("../controllers/event");
 
-router.use(flash());
 router.use(express.static("public"));
 // router.use(
 //   express.static(

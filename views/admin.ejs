@@ -113,54 +113,77 @@
     <%- include('common/sideMenu') %> <%- include('common/footer') %> <%-
     include('common/script') %> <%- include('form-handlers/admin-form-handler')
     %>
-    <script src="./jspdf.umd.min.js"></script>
+
+    <script src="./jspdf.es.min.js"></script>
     <script src="./html2canvas.js"></script>
     <script src="./jspdf.plugin.autotable.min.js"></script>
-    <script>
+    <script defer="true" `>
+      // import { jsPDF } from "./jspdf.es.min.js";
       window.jsPDF = window.jspdf.jsPDF;
-      const { jsPDF } = window.jspdf;
       const doc = new jsPDF();
       const table = document.querySelector("table");
 
-      document.querySelector("#save-to-pdf").addEventListener("click", () => {
-        // doc.html(table, {
-        //   callback: function (doc) {
-        //     doc.save("gg.pdf");
-        //   },
-        //   x: 15,
-        //   y: 15,
-        //   // margin: [10, 10, 10, 10],
-        //   width: 100,
-        //windowWidth: 800,
-        // });
-        const img = new Image();
-        img.src = "seda logo.jpg";
-        doc.addImage(img, "jpeg", 13, 10, 20, 10);
-        doc.autoTable({
-          html: "#guest-table",
-          bodyStyles: { fontSize: 4, minCellHeight: 10 },
-          didDrawCell: async function (data) {
-            if (data.column.index === 8 && data.cell.section === "body") {
-              let td = data.cell.raw;
-              let svg = td.getElementsByTagName("img")[0];
-              let dim = data.cell.height - data.cell.padding("vertical");
-              let textPos = data.cell.getTextPos();
-              let imgURL;
-              await html2canvas(svg).then(function (canvas) {
-                imgURL = canvas.toDataURL();
-              });
-              let img2 = new Image();
-              img2.src = imgURL;
-              //   console.log(doc.validateStringAsBase64(imgURL));
-              //   console.log(textPos);
-              // let textPos = data.cell;
-              doc.addImage(img2, textPos.x, textPos.y, dim, dim);
-            }
-          },
-        });
+      document
+        .querySelector("#save-to-pdf")
+        .addEventListener("click", async () => {
+          // doc.html(table, {
+          //   callback: function (doc) {
+          //     doc.save("gg.pdf");
+          //   },
+          //   x: 15,
+          //   y: 15,
+          //   // margin: [10, 10, 10, 10],
+          //   width: 100,
+          //windowWidth: 800,
+          // });
+          const img = new Image();
+          img.src = "seda logo.jpg";
+          doc.addImage(img, "jpeg", 13, 10, 20, 10);
+          doc.text(`Visitor report`, 13, 30);
+          let img2 = new Image();
 
-        doc.save("gg.pdf");
-      });
+          await doc.autoTable({
+            html: "#guest-table",
+            startY: 40,
+            bodyStyles: { fontSize: 6, minCellHeight: 10 },
+            didDrawCell: async function (data) {
+              //  console.log(data);
+              if (data.column.index === 8 && data.cell.section === "body") {
+                let td = data.cell.raw;
+                // let svg = td.getElementsByTagName("img")[0];
+                const svg = td.querySelector("img");
+                let dim = data.cell.height - data.cell.padding("vertical");
+                // console.log(dim);
+                let textPos = data.cell.getTextPos();
+                console.log(data);
+                let imgURL;
+                await html2canvas(svg).then(async function (canvas) {
+                  imgURL = canvas.toDataURL();
+                  canvas;
+                  console.log(imgURL);
+
+                  let img2 = new Image();
+                  img2.src = imgURL;
+
+                  //let textPos = data.cell;
+                  //await doc.addImage(img2, 30, 10, data.cell.x, data.cell.y);
+                  await doc.addImage(
+                    img2,
+                    "png",
+                    textPos.x,
+                    textPos.y,
+                    20,
+                    dim
+                  );
+                });
+              }
+            },
+          });
+
+          setTimeout(() => {
+            doc.save("gg.pdf");
+          }, 60000);
+        });
     </script>
   </body>
 </html>

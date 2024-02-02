@@ -6,9 +6,7 @@
     <div class="main-container">
       <h1 class="heading">Create Event</h1>
       <main>
-        <form action="/api/event/create" method="post">
-          <p><%= message %></p>
-
+        <form>
           <div class="input-fields">
             <span class="legend">
               <label for="Eventname"
@@ -78,13 +76,14 @@
                 <option value="Mabopane">Mabopane</option>
               </select>
             </span>
-            <button type="submit" id="form-submit">Submit</button>
+            <button>Submit</button>
           </div>
         </form>
       </main>
     </div>
 
     <%- include('common/sideMenu') %> <%- include('common/footer') %> <%-
-    include('common/script') %> <%- include('common/validators') %>
+    include('common/script') %> <%- include('common/validators') %> <%-
+    include('form-handlers/event-form-handler') %>
   </body>
 </html>

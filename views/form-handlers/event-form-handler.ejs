@@ -1,12 +1,13 @@
 <script>
   const EventNameInput = document.querySelector("#name");
+  const form = document.querySelector("form");
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    let formDatas = new FormData(form, submit);
+    let formDatas = new FormData(form);
     let myHeaders = new Headers();
 
-    console.log(form2JSON(formDatas));
+    //console.log(form2JSON(formDatas));
 
     myHeaders.append("Content-Type", "application/json");
 
@@ -17,13 +18,20 @@
     };
 
     await fetch("api/event/create", requestOptions)
-      .then((response) => response.json())
-      .then((result) => {
-        console.log(result);
-        document.querySelector("#message-from-server").innerText =
-          result.message;
+      .then((response) => {
+        if (response.url.includes("message")) {
+          let message = response.url.slice(response.url.indexOf("=") + 1);
+
+          notify(decodeURIComponent(message), "success");
+        }
+
+        if (response.url.includes("error")) {
+          let err = response.url.slice(response.url.indexOf("=") + 1);
+
+          notify(decodeURIComponent(err), "error");
+        }
+
         form.reset();
-        signaturePad.clear();
       })
       .catch((error) => console.log("error", error));
   });
@@ -38,5 +46,24 @@
     }
 
     return JSON.stringify(jSONObj);
+  }
+
+  function notify(message, type) {
+    const toast = document.createElement("p");
+
+    toast.innerText = message;
+    toast.id = "toast";
+
+    if (type === "success") {
+      toast.classList.add("success-toast");
+    } else {
+      toast.classList.add("error-toast");
+    }
+
+    document.querySelector("body").append(toast);
+
+    setTimeout(() => {
+      document.querySelector("#toast").remove();
+    }, 3000);
   }
 </script>

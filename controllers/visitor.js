@@ -24,7 +24,6 @@ exports.visit = async (req, res, next) => {
         branch,
         signature,
       });
-      console.log(req.body);
       await visitor.save();
     }
 
@@ -38,9 +37,9 @@ exports.visit = async (req, res, next) => {
       await visitorFromDB.save();
     }
 
-    // req.flash("message", "Visitor registered!");
-    return (req.flash("message", "Visitor registered!"),res.redirect("/register-visitor"));
-    // res.redirect("/regi");
+    return res.redirect(
+      `/register-visitor?message=${encodeURIComponent("Visitor registered")}`
+    );
   } catch (error) {
     return next(new ErrorResponse(error, 500));
   }
@@ -51,7 +50,9 @@ exports.findVisitor = async (req, res, next) => {
     console.log(searchObjectBuilder(req.body));
     const visitorFromDB = await Visitor.find(searchObjectBuilder(req.body));
     if (!visitorFromDB || visitorFromDB.length === 0) {
-      return next(new ErrorResponse("Visitors not found", 404));
+      return res.redirect(
+        `/register-visitor?message=${encodeURIComponent("visitor not found")}`
+      );
     }
 
     res.status(200).send(visitorFromDB);

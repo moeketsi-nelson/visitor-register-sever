@@ -79,12 +79,11 @@
     let img = document.createElement("img");
     img.src = url;
     img.className = "signature-svg";
-    img.addEventListener("load", () => URL.revokeObjectURL(url));
 
     return img;
   }
 
-  function createTableRow(visitor, visit) {
+  async function createTableRow(visitor, visit) {
     const row = document.createElement("tr");
     const name = document.createElement("td");
     const surname = document.createElement("td");
@@ -105,7 +104,7 @@
     date.innerText = new Date(visit.date).toLocaleString();
     reason.innerText = visit.reason;
 
-    signature.append(createImgFromSVG(visit.signature));
+    await signature.append(createImgFromSVG(visit.signature));
     signature.className = "signature-container";
 
     row.append(name, surname, id, cell, email, branch, date, reason, signature);

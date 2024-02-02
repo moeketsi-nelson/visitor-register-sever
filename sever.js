@@ -11,7 +11,7 @@ const MongoDBSession = require("connect-mongodb-session")(session);
 const { isAuth, isAdmin } = require("./middleware/auth");
 const multer = require("multer");
 const upload = multer({ dest: "uploads/" });
-const flash = require("connect-flash");
+const flash = require("express-flash");
 
 const modules = require("./routes/modules");
 
@@ -40,12 +40,12 @@ app.use(
   session({
     secret: "fghjkkjhfddj",
     resave: false,
-    saveUninitialized: false,
+    saveUninitialized: true,
     store,
   })
 );
 
-app.use(cors(/*corsOptions*/));
+app.use(cors(corsOptions));
 // app.use(
 //   helmet({
 //     contentSecurityPolicy: false,
@@ -56,6 +56,7 @@ app.use(flash());
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
+modules(app);
 app.use(express.static("public"));
 
 app.use("/api/auth", require("./routes/auth"));
@@ -63,33 +64,24 @@ app.use("/api/event", require("./routes/event"));
 app.use("/api/visitor", require("./routes/visitor"));
 
 app.get("/", (req, res, next) => {
-  res.render("login", { message: "" });
-  // res.render('visitor-register')
+  res.render("login");
 });
 
 app.get("/register-visitor", isAuth, (req, res, next) => {
-  console.log(req.flash("message")[0]);
-  res.render("visitor-register", { message: req.flash("message")[0] });
+  res.render("visitor-register");
 });
 
 app.get("/register-guest", isAuth, (req, res, next) => {
-  res.render("guest-register", { message: "" });
+  res.render("guest-register");
 });
 
 app.get("/create-event", isAuth, (req, res, next) => {
-  console.log(req.flash("message"));
-  res.render("create-event", { message: req.flash("message")[0] });
+  res.render("create-event");
 });
 
 app.get("/admin", isAuth, isAdmin, (req, res, next) => {
-  res.render("admin", { message: "" });
+  res.render("admin");
 });
-
-app.get("/regi", isAuth, isAdmin, (req, res, next) => {
-  res.send(req.flash("message"));
-});
-
-modules(app);
 
 app.use(errorHandler);
 
@@ -101,3 +93,5 @@ process.on("unhandledRejection,", (err, promise) => {
   console.log(`Logged Error: ${err}`);
   server.close(() => process.exit(1));
 });
+
+console.log("hi")
